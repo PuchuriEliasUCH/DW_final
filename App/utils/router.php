@@ -12,11 +12,11 @@ class Router {
     public function redireccion() {
         $url = explode('/', URL);
 
-        $this->controller = !empty($url[1]) ? $url[1] : 'page';
-        $this->method = !empty($url[2]) ? $url[2] : 'inicio';
-        $this->params = array_slice($url, 3);
+        $this -> controller = !empty($url[1]) ? $url[1] : 'page';
+        $this -> method = !empty($url[2]) ? $url[2] : 'inicio';
+        $this -> params = array_slice($url, 3);
 
-        $this->controller = $this->controller . 'Controller';
+        $this->controller = $this -> controller . 'Controller';
 
         $archivo = __DIR__ . '/../Controller/' . $this->controller . '.php';
 

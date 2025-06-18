@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Red Peruana de Donaciones Comunitarias</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>SolidaridApp</title>
+    <link href="<?= URL_PATH ?>/public/assets/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -15,7 +15,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <!-- Logo / Marca -->
-                <a class="navbar-brand fw-bold text-warning" href="#">
+                <a class="navbar-brand fw-bold text-warning" href="<?=URL_PATH?>/page/inicio">
                     SolidaridApp
                 </a>
 
@@ -28,7 +28,7 @@
                 <div class="collapse navbar-collapse" id="navbarSolidaridApp">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-3">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Inicio</a>
+                            <a class="nav-link" href="<?= URL_PATH ?>/page/inicio">Inicio</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Catálogo</a>
@@ -36,11 +36,8 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">Registrarse</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Iniciar Sesión</a>
-                        </li>
                     </ul>
-                    <a href="#" class="btn btn-warning fw-semibold shadow-sm">
+                    <a href="<?= URL_PATH?>/page/login" class="btn btn-warning fw-semibold shadow-sm">
                         Donar Ahora
                     </a>
                 </div>

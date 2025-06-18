@@ -15,7 +15,9 @@ class PageController extends Render{
 
     public function registro(){}
 
-    public function login(){}
+    public function login(){
+        $this -> render('login');
+    }
 }
 
 

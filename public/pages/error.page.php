@@ -12,13 +12,13 @@
         .display-404 {
             font-size: 10rem;
             font-weight: 900;
-            color: #ffc107; /* amarillo Bootstrap */
+            color: #ffc107;
             line-height: 1;
         }
         .title-404 {
             font-size: 2.5rem;
             font-weight: 800;
-            color: #dc3545; /* rojo Bootstrap */
+            color: #dc3545;/
         }
         .text-muted-404 {
             font-size: 1.2rem;
@@ -34,10 +34,12 @@
             Lo sentimos, la página que buscas no existe o ha sido movida.<br>
             Por favor, verifica la dirección o regresa al inicio.
         </p>
-        <a href="./" class="btn btn-warning btn-lg fw-bold px-4 py-2 shadow">
+        <a href="<?= URL_PATH ?>/" class="btn btn-warning btn-lg fw-bold px-4 py-2 shadow">
             Volver a SolidaridApp
         </a>
     </div>
 
 </body>
 </html>
+
+<?php var_dump(URL_PATH)?>

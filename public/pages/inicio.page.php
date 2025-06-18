@@ -1,14 +1,15 @@
 <?php
-include("./Public/components/header.php");
+include(__DIR__ . "/../components/header.php");
 ?>
 
 <!-- Hero -->
-<section class="text-light text-center py-5" style="
+<section class="text-light text-center py-5 position-relative" style="
     background: url('<?= URL_PATH ?>/public/assets/imgs/hero_donacion.png') center/cover no-repeat;
-    min-height: 400px;
-    position: relative;
-">
-    <div class="container" style="background-color: rgba(0, 0, 0, 0.5); padding: 2rem; border-radius: 0.5rem;">
+    min-height: 450px;">
+    
+    <div class="position-absolute top-0 start-0 w-100 h-100" style="background-color: rgba(0, 0, 0, 0.55); z-index: 1;"></div>
+
+    <div class="container position-relative" style="z-index: 2;">
         <h2 class="display-5 fw-bold">Conectamos corazones solidarios con organizaciones que necesitan ayuda</h2>
         <p class="lead">Únete a nuestra red de solidaridad y transforma vidas con tu ayuda</p>
         <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
@@ -58,6 +59,7 @@ include("./Public/components/header.php");
 <section class="bg-light py-5">
     <div class="container">
         <h3 class="text-center mb-4">Necesidades Destacadas</h3>
+        <!-- Se rellena con la Base de Datos -->
         <div class="row">
             <!-- Card ejemplo -->
             <div class="col-md-3">
@@ -119,5 +121,5 @@ include("./Public/components/header.php");
 </section>
 
 <?php
-include("./Public/components/footer.php");
+include(__DIR__ . "/../components/footer.php");
 ?>
