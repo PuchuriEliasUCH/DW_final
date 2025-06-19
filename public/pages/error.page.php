@@ -41,5 +41,3 @@
 
 </body>
 </html>
-
-<?php var_dump(URL_PATH)?>

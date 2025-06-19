@@ -8,7 +8,7 @@
                     <h4 class="mb-0 fw-bold">Registro de Usuario</h4>
                 </div>
                 <div class="card-body">
-                    <form class="needs-validation" novalidate>
+                    <form class="needs-validation" id="formRegistro" novalidate>
                         <!-- Nombre -->
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre completo</label>
@@ -56,21 +56,6 @@
     </div>
 </div>
 
-<script>
-    // Activar validación Bootstrap
-    (() => {
-        'use strict';
-        const forms = document.querySelectorAll('.needs-validation');
-        Array.from(forms).forEach(form => {
-            form.addEventListener('submit', event => {
-                if (!form.checkValidity()) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                }
-                form.classList.add('was-validated');
-            }, false);
-        });
-    })();
-</script>
+<script src="<?= URL_PATH ?>/public/assets/js/main.js"></script>
 
 <?php include(__DIR__ . "/../components/footer.php"); ?>
