@@ -2,9 +2,9 @@
 class Db {
     private $cnx;
     private $dbhost = 'localhost';
-    private $dbname = 'pruebas3';
+    private $dbname = 'pruebas1';
     private $dbuser = 'root';
-    private $dbpass = '';
+    private $dbpass = 'admin';
 
     public function __construct(){
         $opciones = [

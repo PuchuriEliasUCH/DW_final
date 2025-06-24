@@ -1,5 +1,6 @@
+import { vistas } from './utils/baseUrl.js'
 // Funcionalidad completa para el catálogo de necesidades
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Referencias a elementos del DOM
     const filtroCategoria = document.getElementById('filtroCategoria');
     const filtroUrgencia = document.getElementById('filtroUrgencia');
@@ -7,101 +8,31 @@ document.addEventListener('DOMContentLoaded', function() {
     const busqueda = document.getElementById('busqueda');
     const catalogoContainer = document.getElementById('catalogoNecesidades');
     const contadorTotal = document.querySelector('.badge.bg-dark');
-    
+
+    // Ajax
+    const necesidades = async () => {
+        const data = await vistas('necesidad/landingListar');
+
+        necesidadesOriginales.length = 0;
+        necesidadesOriginales.push(...data.resultados); 
+        necesidadesFiltradas = [...necesidadesOriginales];
+
+        console.log(data.resultados)
+
+        mostrarNecesidades();
+        actualizarPaginacion();
+        actualizarContador();
+    }
+
     // Variables para paginación
     let paginaActual = 1;
     const elementosPorPagina = 6;
     let necesidadesFiltradas = [];
-    
-    // Datos originales de las necesidades (extraídos del HTML)
-    const necesidadesOriginales = [
-        {
-            titulo: 'Alimentos no perecibles',
-            organizacion: 'Comedor Santa María',
-            ubicacion: 'San Juan de Lurigancho',
-            descripcion: 'Necesitamos arroz, fideos, aceite y enlatados para alimentar a 150 familias diariamente.',
-            categoria: 'alimentos',
-            urgencia: 'alta',
-            tipoOrg: 'comedor',
-            badge: 'Alimentos'
-        },
-        {
-            titulo: 'Ropa de invierno',
-            organizacion: 'Albergue Esperanza',
-            ubicacion: 'Cercado de Lima',
-            descripcion: 'Buscamos abrigos, frazadas y ropa abrigadora para personas en situación de calle.',
-            categoria: 'ropa',
-            urgencia: 'media',
-            tipoOrg: 'albergue',
-            badge: 'Ropa'
-        },
-        {
-            titulo: 'Medicinas básicas',
-            organizacion: 'Centro de Salud Comunitario',
-            ubicacion: 'Villa El Salvador',
-            descripcion: 'Requerimos paracetamol, ibuprofeno y medicamentos básicos para atender a la comunidad.',
-            categoria: 'medicinas',
-            urgencia: 'alta',
-            tipoOrg: 'otros',
-            badge: 'Medicinas'
-        },
-        {
-            titulo: 'Útiles escolares',
-            organizacion: 'Escuela Primaria Los Ángeles',
-            ubicacion: 'Ate',
-            descripcion: 'Necesitamos cuadernos, lápices y materiales escolares para 200 estudiantes.',
-            categoria: 'utiles',
-            urgencia: 'baja',
-            tipoOrg: 'escuela',
-            badge: 'Útiles'
-        },
-        {
-            titulo: 'Juguetes para niños',
-            organizacion: 'Hogar de Niños San José',
-            ubicacion: 'Callao',
-            descripcion: 'Buscamos juguetes didácticos y educativos para 50 niños de 3 a 12 años.',
-            categoria: 'juguetes',
-            urgencia: 'media',
-            tipoOrg: 'otros',
-            badge: 'Juguetes'
-        },
-        {
-            titulo: 'Productos de higiene',
-            organizacion: 'Albergue Mujeres en Acción',
-            ubicacion: 'La Victoria',
-            descripcion: 'Necesitamos jabón, champú, pasta dental y productos de higiene personal.',
-            categoria: 'otros',
-            urgencia: 'alta',
-            tipoOrg: 'albergue',
-            badge: 'Higiene'
-        },
-        // Datos adicionales para demostrar paginación
-        {
-            titulo: 'Libros y material educativo',
-            organizacion: 'Biblioteca Comunitaria',
-            ubicacion: 'San Martín de Porres',
-            descripcion: 'Requerimos libros de texto, enciclopedias y material didáctico para estudiantes.',
-            categoria: 'utiles',
-            urgencia: 'baja',
-            tipoOrg: 'otros',
-            badge: 'Educación'
-        },
-        {
-            titulo: 'Alimentos para bebés',
-            organizacion: 'Casa Cuna Municipal',
-            ubicacion: 'Miraflores',
-            descripcion: 'Necesitamos leche en polvo, papillas y alimentos especiales para bebés.',
-            categoria: 'alimentos',
-            urgencia: 'alta',
-            tipoOrg: 'otros',
-            badge: 'Alimentos'
-        }
-    ];
 
-    // Inicializar
-    necesidadesFiltradas = [...necesidadesOriginales];
-    mostrarNecesidades();
-    actualizarPaginacion();
+    // Datos originales de las necesidades (extraídos del HTML)
+    const necesidadesOriginales = [];
+
+    necesidades();
 
     // Event listeners para filtros
     filtroCategoria.addEventListener('change', aplicarFiltros);
@@ -119,15 +50,15 @@ document.addEventListener('DOMContentLoaded', function() {
         necesidadesFiltradas = necesidadesOriginales.filter(necesidad => {
             // Filtro por categoría
             const pasaCategoria = !categoria || necesidad.categoria === categoria;
-            
+
             // Filtro por urgencia
             const pasaUrgencia = !urgencia || necesidad.urgencia === urgencia;
-            
+
             // Filtro por tipo de organización
             const pasaTipoOrg = !tipoOrg || necesidad.tipoOrg === tipoOrg;
-            
+
             // Filtro por búsqueda de texto
-            const pasaBusqueda = !textoBusqueda || 
+            const pasaBusqueda = !textoBusqueda ||
                 necesidad.titulo.toLowerCase().includes(textoBusqueda) ||
                 necesidad.organizacion.toLowerCase().includes(textoBusqueda) ||
                 necesidad.ubicacion.toLowerCase().includes(textoBusqueda) ||
@@ -190,15 +121,15 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="card border-0 shadow-sm h-100">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-start mb-3">
-                        <h5 class="card-title fw-bold">${necesidad.titulo}</h5>
-                        <span class="badge ${urgenciaClass[necesidad.urgencia]}">${urgenciaText[necesidad.urgencia]}</span>
+                        <h5 class="card-title fw-bold">${necesidad.nombre_necesidad}</h5>
+                        <span class="badge ${urgenciaClass[necesidad.prioridad]}">${urgenciaText[necesidad.prioridad]}</span>
                     </div>
-                    <p class="card-text mb-2"><strong>Organización:</strong> ${necesidad.organizacion}</p>
-                    <p class="card-text mb-2"><strong>Ubicación:</strong> ${necesidad.ubicacion}</p>
-                    <p class="card-text text-muted mb-3">${necesidad.descripcion}</p>
+                    <p class="card-text mb-2"><strong>Organización:</strong> ${necesidad.razon_social}</p>
+                    <p class="card-text mb-2"><strong>Ubicación:</strong> ${necesidad.direccion}</p>
+                    <p class="card-text text-muted mb-3">${necesidad.descripcion_corta}</p>
                     <div class="d-flex justify-content-between align-items-center">
-                        <span class="badge bg-secondary">${necesidad.badge}</span>
-                        <button class="btn btn-warning btn-sm text-dark fw-semibold" onclick="donarAhora('${necesidad.titulo}')">Donar Ahora</button>
+                        <span class="badge bg-secondary">${necesidad.categoria}</span>
+                        <button class="btn btn-warning btn-sm text-dark fw-semibold" onclick="donarAhora('${necesidad.razon_social}')">Donar Ahora</button>
                     </div>
                 </div>
             </div>
@@ -241,10 +172,10 @@ document.addEventListener('DOMContentLoaded', function() {
         paginacion.appendChild(siguienteLi);
 
         // Event listeners para paginación
-        paginacion.addEventListener('click', function(e) {
+        paginacion.addEventListener('click', function (e) {
             e.preventDefault();
             const pagina = parseInt(e.target.dataset.pagina);
-            
+
             if (pagina && pagina !== paginaActual && pagina >= 1 && pagina <= totalPaginas) {
                 paginaActual = pagina;
                 mostrarNecesidades();
@@ -261,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Función para limpiar filtros (disponible globalmente)
-    window.limpiarFiltros = function() {
+    window.limpiarFiltros = function () {
         filtroCategoria.value = '';
         filtroUrgencia.value = '';
         filtroOrganizacion.value = '';
@@ -270,13 +201,13 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     // Función para el botón "Donar Ahora" (disponible globalmente)
-    window.donarAhora = function(titulo) {
+    window.donarAhora = function (titulo) {
         alert(`Funcionalidad de donación para: ${titulo}\n\nEsta función se conectaría con el sistema de donaciones.`);
         // Aquí se implementaría la lógica real de donación
     };
 
     // Manejo del Enter en el campo de búsqueda
-    busqueda.addEventListener('keypress', function(e) {
+    busqueda.addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
             e.preventDefault();
             aplicarFiltros();

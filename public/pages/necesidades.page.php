@@ -82,12 +82,6 @@ include(__DIR__ . "/../components/header.php");
         </div>
     </div>
 
-    <?php
-    echo '<pre>';
-        var_dump($usuarios);
-    echo '</pre>';
-    ?>
-
     <!-- Paginación -->
     <nav aria-label="Navegación del catálogo" class="mt-5">
         <ul class="pagination justify-content-center">
@@ -116,7 +110,7 @@ include(__DIR__ . "/../components/header.php");
 </section>
 
 
-<script src="<?= URL_PATH ?>/public/assets/js/necesidades.js"></script>
+<script type="module" src="<?= URL_PATH ?>/public/assets/js/necesidades.js"></script>
 
 <?php
 include(__DIR__ . "/../components/footer.php");
