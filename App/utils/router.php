@@ -28,21 +28,25 @@ class Router {
     }
 
     private function mostrar404() {
+        $database = new Db();
+        $cnx = $database -> conectar();
         require_once(__DIR__ . '/../Controller/PageController.php');
-        $page = new PageController();
+        $page = new PageController($cnx);
         $page -> error404();
         exit;
     }
 
     public function run() {
+        $database = new Db();
+        $cnx = $database -> conectar();
         $controllerName = $this -> controller;
         $method = $this -> method;
-
+        
         if (!class_exists($controllerName)) {
             $this->mostrar404();
         }
 
-        $controller = new $controllerName();
+        $controller = new $controllerName($cnx);
 
         if (!method_exists($controller, $method)) {
             $this->mostrar404();

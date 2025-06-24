@@ -31,13 +31,16 @@
                             <a class="nav-link" href="<?= URL_PATH ?>/page/inicio">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Catálogo</a>
+                            <a class="nav-link" href="<?= URL_PATH ?>/page/necesidades">Necesidades</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Registrarse</a>
+                            <a class="nav-link" href="<?= URL_PATH ?>/page/organizaciones">Organizaciones</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= URL_PATH ?>/registro/inicio">Registrarse</a>
                         </li>
                     </ul>
-                    <a href="<?= URL_PATH?>/page/login" class="btn btn-warning fw-semibold shadow-sm">
+                    <a href="<?= URL_PATH?>/login/inicio" class="btn btn-warning fw-semibold shadow-sm">
                         Donar Ahora
                     </a>
                 </div>

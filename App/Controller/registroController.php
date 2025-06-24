@@ -2,7 +2,7 @@
 require(__DIR__ . '/../utils/render.php');
 require_once(__DIR__ . "/../models/usuario.php");
 
-class LoginController extends Render{
+class RegistroController extends Render{
     private $oUsuario;
     
     public function __construct(PDO $cnx){
@@ -10,7 +10,7 @@ class LoginController extends Render{
     }
 
     public function inicio(){
-        $this -> render('login');
+        $this -> render('registro');
     }
 
 }

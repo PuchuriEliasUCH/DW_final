@@ -1,8 +1,11 @@
 <?php
-
-require(__DIR__ . '/../utils/render.php');
+require_once(__DIR__ . "/../models/necesidad.php");
+require_once(__DIR__ . '/../utils/render.php');
 
 class PageController extends Render{
+    public function __construct(PDO $cnx){
+    }
+
     public function inicio(){
         $this -> render('inicio');
     }
@@ -11,12 +14,16 @@ class PageController extends Render{
         $this->render('error');
     }
 
-    public function catalogo(){}
+    public function necesidades(){
+        $this -> render('necesidades');
+    }
 
-    public function registro(){}
+    public function organizaciones(){
+        $this -> render('organizaciones');
+    }
 
-    public function login(){
-        $this -> render('login');
+    public function registro(){
+        $this -> render('registro');
     }
 }
 
