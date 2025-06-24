@@ -11,10 +11,10 @@ class Db {
     private $dbpass;
 
     public function __construct(){
-        $this -> dbhost = $_SERVER['MYSQL_ADDON_HOST'];
-        $this -> dbname = $_SERVER['MYSQL_ADDON_DB'];
-        $this -> dbuser = $_SERVER['MYSQL_ADDON_USER'];
-        $this -> dbpass = $_SERVER['MYSQL_ADDON_PASSWORD'];
+        $this -> dbhost = getenv('MYSQL_ADDON_HOST');
+        $this -> dbname = getenv('MYSQL_ADDON_DB');
+        $this -> dbuser = getenv('MYSQL_ADDON_USER');
+        $this -> dbpass = getenv('MYSQL_ADDON_PASSWORD');
 
         $opciones = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
