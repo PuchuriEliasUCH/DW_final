@@ -1,12 +1,21 @@
 <?php
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
+$dotenv->load();
+
 class Db {
     private $cnx;
-    private $dbhost = 'localhost';
-    private $dbname = 'pruebas1';
-    private $dbuser = 'root';
-    private $dbpass = 'admin';
+    private $dbhost;
+    private $dbname;
+    private $dbuser;
+    private $dbpass;
 
     public function __construct(){
+        $this -> dbhost = $_ENV['MYSQL_ADDON_HOST'];
+        $this -> dbname = $_ENV['MYSQL_ADDON_DB'];
+        $this -> dbuser = $_ENV['MYSQL_ADDON_USER'];
+        $this -> dbpass = $_ENV['MYSQL_ADDON_PASSWORD'];
+
         $opciones = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
