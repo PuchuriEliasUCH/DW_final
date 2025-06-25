@@ -30,7 +30,9 @@ class LoginController extends Render{
 
         $usuario = $this->oUsuario->getByEmail($datos['email']);
 
-        if ($usuario && $usuario['password'] === $datos['password']) {
+        $decrypt = password_verify($datos['password'], $usuario['password']);
+
+        if ($usuario && $decrypt) {
             $_SESSION['usuario'] = [$this->oUsuario->showPerfil($datos['email'])];
 
             $res->esCorrecto = true;

@@ -1,4 +1,4 @@
-<?php include(__DIR__ . "/../components/header.php");?>
+<?php include(__DIR__ . "/../components/header.php"); ?>
 
 <div class="container py-5">
     <div class="row justify-content-center">
@@ -8,7 +8,7 @@
                     <h4 class="mb-0 fw-bold">Registro de Usuario</h4>
                 </div>
                 <div class="card-body">
-                    <form class="needs-validation" method="post" action="<?= URL_PATH?>/App/Controller/loginController.php" id="formRegistro" novalidate>
+                    <form class="needs-validation" method="post" action="<?= URL_PATH ?>/App/Controller/loginController.php" id="formRegistro" novalidate>
                         <!-- Tipo de Usuario -->
                         <div class="mb-4">
                             <label class="form-label fw-semibold">Tipo de usuario</label>
@@ -164,6 +164,24 @@
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
+                                    <label for="descripcionCorta" class="form-label">Descripción corta</label>
+                                    <input type="text" class="form-control" id="descripcionCorta" name="descripcionCorta" maxlength="50">
+                                    <div class="invalid-feedback">
+                                        Ingresa una breve descripción (máx. 50 caracteres).
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="descripcionLarga" class="form-label">Descripción larga</label>
+                                    <textarea class="form-control" id="descripcionLarga" name="descripcionLarga" rows="3"></textarea>
+                                    <div class="invalid-feedback">
+                                        Ingresa una descripción detallada de la organización.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
                                     <label for="passwordOrganizacion" class="form-label">Contraseña</label>
                                     <input type="password" class="form-control" id="passwordOrganizacion" name="passwordOrganizacion" minlength="6">
                                     <div class="invalid-feedback">
@@ -189,7 +207,7 @@
 
                     <!-- Enlaces adicionales -->
                     <hr class="my-4">
-                    
+
                     <div class="text-center">
                         <p class="mb-0">¿Ya tienes una cuenta?</p>
                         <a href="<?= URL_PATH ?>/auth/login" class="btn btn-outline-warning mt-2">
@@ -202,6 +220,6 @@
     </div>
 </div>
 
-<script src="<?= URL_PATH ?>/public/assets/js/registro.js"></script>
+<script type="module" src="<?= URL_PATH ?>/public/assets/js/registro.js"></script>
 
 <?php include(__DIR__ . "/../components/footer.php"); ?>

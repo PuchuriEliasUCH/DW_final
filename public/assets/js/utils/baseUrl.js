@@ -22,8 +22,24 @@ export const login = async (datos) => {
             body: JSON.stringify(datos)
         });
 
-        return res.json();
+        return await res.json();
     } catch (e) {
-        console.error(e)
+        console.error(e);
+    }
+}
+
+export const registroUsuarios = async (datos) => {
+    try {
+        const res = await fetch(`${BASE_URL}usuario/registrar`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datos)
+        });
+
+        return await res.json();
+    } catch (e) {
+        console.error(e);
     }
 }
