@@ -14,9 +14,9 @@ class Db {
 
         // Desarrollo (comentar al hacer deploy)
         $this -> dbhost = $_ENV['MYSQL_ADDON_HOST'];
-        $this -> dbname = $_ENV['MYSQL_ADDON_HOST'];
-        $this -> dbuser = $_ENV['MYSQL_ADDON_HOST'];
-        $this -> dbpass = $_ENV['MYSQL_ADDON_HOST'];
+        $this -> dbname = $_ENV['MYSQL_ADDON_DB'];
+        $this -> dbuser = $_ENV['MYSQL_ADDON_USER'];
+        $this -> dbpass = $_ENV['MYSQL_ADDON_PASSWORD'];
 
         /*
         // Producción 

@@ -11,11 +11,12 @@
 <body>
 
     <!-- Header -->
-    <header class="bg-light shadow-sm">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!-- Header -->
+    <header class="shadow-sm">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top"> <!-- sticky-top agregado -->
             <div class="container">
                 <!-- Logo / Marca -->
-                <a class="navbar-brand fw-bold text-warning" href="<?=URL_PATH?>/page/inicio">
+                <a class="navbar-brand fw-bold text-warning" href="<?= URL_PATH ?>/page/inicio">
                     SolidaridApp
                 </a>
 
@@ -40,13 +41,14 @@
                             <a class="nav-link" href="<?= URL_PATH ?>/registro/inicio">Registrarse</a>
                         </li>
                     </ul>
-                    <a href="<?= URL_PATH?>/login/inicio" class="btn btn-warning fw-semibold shadow-sm">
+                    <a href="<?= URL_PATH ?>/login/inicio" class="btn btn-warning fw-semibold shadow-sm">
                         Donar Ahora
                     </a>
                 </div>
             </div>
         </nav>
     </header>
+
 
 
     <main>

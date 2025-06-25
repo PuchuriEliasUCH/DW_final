@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const filtroTipoOrganizacion = document.getElementById('filtroTipoOrganizacion');
     const filtroUbicacion = document.getElementById('filtroUbicacion');
     const busqueda = document.getElementById('busqueda');
-    const botonBuscar = document.querySelector('.input-group .btn');
     const directorioContainer = document.getElementById('directorioOrganizaciones');
     const contadorTotal = document.querySelector('.badge.bg-dark');
     
@@ -207,7 +206,6 @@ document.addEventListener('DOMContentLoaded', function() {
     filtroTipoOrganizacion.addEventListener('change', aplicarFiltros);
     filtroUbicacion.addEventListener('change', aplicarFiltros);
     busqueda.addEventListener('input', aplicarFiltros);
-    botonBuscar.addEventListener('click', aplicarFiltros);
 
     // Función principal para aplicar filtros
     function aplicarFiltros() {
@@ -534,8 +532,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function agregarOrdenamiento() {
         const sectionFiltros = document.querySelector('.bg-light .container .row');
        
-        
-        sectionFiltros.insertAdjacentHTML('beforeend', ordenamientoHtml);
         
         // Event listeners para ordenamiento
         document.querySelectorAll('input[name="ordenamiento"]').forEach(radio => {

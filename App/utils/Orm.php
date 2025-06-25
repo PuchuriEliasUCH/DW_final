@@ -21,6 +21,12 @@ class Orm{
         return $query -> fetch();
     }
 
+    public function getByEmail($email){
+        $query = $this -> cnx -> prepare("select email, password from usuario where email = '$email'");
+        $query -> execute();
+        return $query -> fetch();
+    }
+
     public function deleteById($id){
         $query = $this -> cnx -> prepare("delete from {$this -> tabla} where id_{$this -> tabla} = $id");
         $query -> execute();
@@ -51,11 +57,17 @@ class Orm{
         return "{$this -> tabla} agregada correctamente";
     }
 
-    ## Cards para el landing
+    ## vistas adicionales
     public function showCards(){
         $query = $this -> cnx -> prepare("select * from view_{$this -> tabla}_card");
         $query -> execute();
         return $query -> fetchAll();
+    }
+
+    public function showPerfil($email){
+        $query = $this -> cnx -> prepare("select * from view_usuario_perfil where email = '$email'");
+        $query -> execute();
+        return $query -> fetch();
     }
 }
 ?>
