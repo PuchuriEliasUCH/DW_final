@@ -30,7 +30,7 @@ class Router {
     private function mostrar404() {
         $database = new Db();
         $cnx = $database -> conectar();
-        require_once(__DIR__ . '/../Controller/PageController.php');
+        require_once(__DIR__ . '/../Controller/pageController.php');
         $page = new PageController($cnx);
         $page -> error404();
         exit;
