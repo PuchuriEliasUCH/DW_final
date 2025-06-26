@@ -1,4 +1,4 @@
-import { vistas } from './utils/baseUrl.js'
+import { vistas } from './utils/baseUrl.js';
 // Funcionalidad completa para el catálogo de necesidades
 document.addEventListener('DOMContentLoaded', function () {
     // Referencias a elementos del DOM
@@ -16,8 +16,6 @@ document.addEventListener('DOMContentLoaded', function () {
         necesidadesOriginales.length = 0;
         necesidadesOriginales.push(...data.resultados); 
         necesidadesFiltradas = [...necesidadesOriginales];
-
-        console.log(data.resultados)
 
         mostrarNecesidades();
         actualizarPaginacion();

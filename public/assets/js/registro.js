@@ -1,4 +1,7 @@
-document.addEventListener('DOMContentLoaded', function() {
+// registro.js (versión optimizada)
+import { registroUsuarios } from './utils/baseUrl.js';
+
+document.addEventListener('DOMContentLoaded', function () {
     const formRegistro = document.getElementById('formRegistro');
     const tipoUsuarioRadios = document.querySelectorAll('input[name="tipoUsuario"]');
     const camposDonador = document.getElementById('camposDonador');
@@ -6,306 +9,185 @@ document.addEventListener('DOMContentLoaded', function() {
     const tipoOrganizacionSelect = document.getElementById('tipoOrganizacion');
     const otroTipoContainer = document.getElementById('otroTipoContainer');
 
-    // Función para cambiar entre tipos de usuario
     function cambiarTipoUsuario() {
-        const tipoSeleccionado = document.querySelector('input[name="tipoUsuario"]:checked').value;
-        
-        if (tipoSeleccionado === 'donador') {
-            camposDonador.style.display = 'block';
-            camposOrganizacion.style.display = 'none';
-            
-            // Habilitar validación para campos de donador
-            habilitarValidacion(camposDonador, true);
-            habilitarValidacion(camposOrganizacion, false);
-        } else {
-            camposDonador.style.display = 'none';
-            camposOrganizacion.style.display = 'block';
-            
-            // Habilitar validación para campos de organización
-            habilitarValidacion(camposDonador, false);
-            habilitarValidacion(camposOrganizacion, true);
-        }
-        
-        // Limpiar errores de validación
-        limpiarErroresValidacion();
+        const tipo = document.querySelector('input[name="tipoUsuario"]:checked').value;
+
+        camposDonador.style.display = tipo === 'donador' ? 'block' : 'none';
+        camposOrganizacion.style.display = tipo === 'organizacion' ? 'block' : 'none';
+
+        aplicarEstadoValidacion(camposDonador, tipo === 'donador');
+        aplicarEstadoValidacion(camposOrganizacion, tipo === 'organizacion');
     }
 
-    // Función para habilitar/deshabilitar validación
-    function habilitarValidacion(contenedor, habilitar) {
-        const campos = contenedor.querySelectorAll('input, select');
-        campos.forEach(campo => {
-            if (habilitar) {
-                campo.setAttribute('required', '');
-            } else {
-                campo.removeAttribute('required');
-            }
+    function aplicarEstadoValidacion(contenedor, requerido = null) {
+        contenedor.querySelectorAll('input, select, textarea').forEach(campo => {
+            if (requerido !== null) requerido ? campo.setAttribute('required', '') : campo.removeAttribute('required');
+            campo.classList.remove('is-invalid', 'is-valid');
         });
     }
 
-    // Función para limpiar errores de validación
-    function limpiarErroresValidacion() {
-        const campos = formRegistro.querySelectorAll('.form-control, .form-select');
-        campos.forEach(campo => {
-            campo.classList.remove('is-invalid');
-            campo.classList.remove('is-valid');
-        });
-    }
-
-    // Función para mostrar/ocultar campo "Otro tipo"
     function manejarTipoOrganizacion() {
+        const otroTipo = document.getElementById('otroTipo');
         if (tipoOrganizacionSelect.value === 'otro') {
             otroTipoContainer.style.display = 'block';
-            document.getElementById('otroTipo').setAttribute('required', '');
+            otroTipo.setAttribute('required', '');
         } else {
             otroTipoContainer.style.display = 'none';
-            document.getElementById('otroTipo').removeAttribute('required');
-            document.getElementById('otroTipo').value = '';
+            otroTipo.removeAttribute('required');
+            otroTipo.value = '';
         }
     }
 
-    // Función para validar contraseñas
     function validarContraseñas() {
-        const tipoSeleccionado = document.querySelector('input[name="tipoUsuario"]:checked').value;
-        let password, confirmarPassword;
-
-        if (tipoSeleccionado === 'donador') {
-            password = document.getElementById('passwordDonador');
-            confirmarPassword = document.getElementById('confirmarPasswordDonador');
-        } else {
-            password = document.getElementById('passwordOrganizacion');
-            confirmarPassword = document.getElementById('confirmarPasswordOrganizacion');
-        }
-
-        if (password.value !== confirmarPassword.value) {
-            confirmarPassword.classList.add('is-invalid');
-            confirmarPassword.classList.remove('is-valid');
-            return false;
-        } else {
-            confirmarPassword.classList.remove('is-invalid');
-            confirmarPassword.classList.add('is-valid');
-            return true;
-        }
+        const tipo = document.querySelector('input[name="tipoUsuario"]:checked').value;
+        const pass = document.getElementById(tipo === 'donador' ? 'passwordDonador' : 'passwordOrganizacion');
+        const conf = document.getElementById(tipo === 'donador' ? 'confirmarPasswordDonador' : 'confirmarPasswordOrganizacion');
+        const iguales = pass.value === conf.value;
+        conf.classList.toggle('is-valid', iguales);
+        conf.classList.toggle('is-invalid', !iguales);
+        return iguales;
     }
 
-    // Función para validar edad (debe ser mayor o igual a 18 años)
     function validarEdad() {
-        const fechaNacimientoInput = document.getElementById('fechaNacimiento');
-        const valor = fechaNacimientoInput.value;
-
-        if (!valor) return false;
-
-        const fechaNacimiento = new Date(valor);
+        const input = document.getElementById('fechaNacimiento');
+        if (!input.value) return false;
         const hoy = new Date();
-
-        // Crear fecha mínima válida para tener 18 años hoy
         const fechaMinima = new Date(hoy.getFullYear() - 18, hoy.getMonth(), hoy.getDate());
-
-        if (fechaNacimiento <= fechaMinima) {
-            fechaNacimientoInput.classList.remove('is-invalid');
-            fechaNacimientoInput.classList.add('is-valid');
-            return true;
-        } else {
-            fechaNacimientoInput.classList.add('is-invalid');
-            fechaNacimientoInput.classList.remove('is-valid');
-            return false;
-        }
-    }
-
-
-    // Función para validar DNI
-    function validarDNI() {
-        const dniInput = document.getElementById('dni');
-        const dni = dniInput.value.trim();
-        
-        if (dni.length === 8 && /^[0-9]+$/.test(dni)) {
-            dniInput.classList.remove('is-invalid');
-            dniInput.classList.add('is-valid');
-            return true;
-        } else {
-            dniInput.classList.add('is-invalid');
-            dniInput.classList.remove('is-valid');
-            return false;
-        }
-    }
-
-
-    function validarCorreos() {
-        const correoDonador = document.getElementById('emailDonador');
-        const correoOrganizacion = document.getElementById('emailOrganizacion');
-        const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        let valido = true;
-
-        // Validar correo del donador (si está visible)
-        if (correoDonador.offsetParent !== null) {
-            const valor = correoDonador.value.trim();
-            if (regexCorreo.test(valor)) {
-                correoDonador.classList.remove('is-invalid');
-                correoDonador.classList.add('is-valid');
-            } else {
-                correoDonador.classList.add('is-invalid');
-                correoDonador.classList.remove('is-valid');
-                valido = false;
-            }
-        }
-
-        // Validar correo de la organización (si está visible)
-        if (correoOrganizacion.offsetParent !== null) {
-            const valor = correoOrganizacion.value.trim();
-            if (regexCorreo.test(valor)) {
-                correoOrganizacion.classList.remove('is-invalid');
-                correoOrganizacion.classList.add('is-valid');
-            } else {
-                correoOrganizacion.classList.add('is-invalid');
-                correoOrganizacion.classList.remove('is-valid');
-                valido = false;
-            }
-        }
-
+        const valido = new Date(input.value) <= fechaMinima;
+        input.classList.toggle('is-valid', valido);
+        input.classList.toggle('is-invalid', !valido);
         return valido;
     }
 
-
-
-    // Función para validar RUC
-    function validarRUC() {
-        const rucInput = document.getElementById('ruc');
-        const ruc = rucInput.value.trim();
-        
-        if (ruc.length === 11 && /^[0-9]+$/.test(ruc)) {
-            rucInput.classList.remove('is-invalid');
-            rucInput.classList.add('is-valid');
-            return true;
-        } else {
-            rucInput.classList.add('is-invalid');
-            rucInput.classList.remove('is-valid');
-            return false;
-        }
+    function validarCampoNumerico(id, longitud) {
+        const input = document.getElementById(id);
+        const valor = input.value.trim();
+        const valido = valor.length === longitud && /^[0-9]+$/.test(valor);
+        input.classList.toggle('is-valid', valido);
+        input.classList.toggle('is-invalid', !valido);
+        return valido;
     }
 
-    // Función para validar teléfono
-    function validarTelefono(inputId) {
-        const telefonoInput = document.getElementById(inputId);
-        const telefono = telefonoInput.value.trim();
-        
-        if (telefono.length === 9 && /^[0-9]+$/.test(telefono)) {
-            telefonoInput.classList.remove('is-invalid');
-            telefonoInput.classList.add('is-valid');
-            return true;
-        } else {
-            telefonoInput.classList.add('is-invalid');
-            telefonoInput.classList.remove('is-valid');
-            return false;
-        }
+    const validarDNI = () => validarCampoNumerico('dni', 8);
+    const validarRUC = () => validarCampoNumerico('ruc', 11);
+    const validarTelefono = () => validarCampoNumerico('telefonoOrganizacion', 9);
+
+    function validarCorreos() {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        let valido = true;
+        ['emailDonador', 'emailOrganizacion'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el && el.offsetParent !== null) {
+                const esValido = regex.test(el.value.trim());
+                el.classList.toggle('is-valid', esValido);
+                el.classList.toggle('is-invalid', !esValido);
+                if (!esValido) valido = false;
+            }
+        });
+        return valido;
     }
 
-    // Event listeners
-    tipoUsuarioRadios.forEach(radio => {
-        radio.addEventListener('change', cambiarTipoUsuario);
-    });
+    function obtenerDatosFormulario(form) {
+    const tipo = document.querySelector('input[name="tipoUsuario"]:checked').value;
 
+    if (tipo === 'donador') {
+        return {
+            email: form.emailDonador.value,
+            password: form.passwordDonador.value,
+            nombre_completo: form.nombreCompleto.value,
+            fecha_nacimiento: form.fechaNacimiento.value,
+            dni: form.dni.value
+        };
+    } else {
+        return {
+            email: form.emailOrganizacion.value,
+            password: form.passwordOrganizacion.value,
+            razon_social: form.nombreOrganizacion.value,
+            ruc: form.ruc.value,
+            telefono: form.telefonoOrganizacion.value,
+            direccion: form.direccion.value,
+            tipo_organizacion: form.tipoOrganizacion.value,
+            otro_tipo: form.otroTipo.value || null,
+            descripcion_corta: form.descripcionCorta.value,
+            descripcion_larga: form.descripcionLarga.value
+        };
+    }
+}
+
+
+    // Eventos
+    tipoUsuarioRadios.forEach(r => r.addEventListener('change', cambiarTipoUsuario));
     tipoOrganizacionSelect.addEventListener('change', manejarTipoOrganizacion);
 
-    // Validación en tiempo real para contraseñas
-    document.getElementById('passwordDonador').addEventListener('input', validarContraseñas);
-    document.getElementById('confirmarPasswordDonador').addEventListener('input', validarContraseñas);
-    document.getElementById('passwordOrganizacion').addEventListener('input', validarContraseñas);
-    document.getElementById('confirmarPasswordOrganizacion').addEventListener('input', validarContraseñas);
+    ['passwordDonador', 'confirmarPasswordDonador', 'passwordOrganizacion', 'confirmarPasswordOrganizacion']
+        .forEach(id => document.getElementById(id).addEventListener('input', validarContraseñas));
 
-    // Validación en tiempo real para fecha de nacimiento
     document.getElementById('fechaNacimiento').addEventListener('input', validarEdad);
-
-    // Validación en tiempo real para DNI
     document.getElementById('dni').addEventListener('input', validarDNI);
-
-    // Validación en tiempo real para RUC
     document.getElementById('ruc').addEventListener('input', validarRUC);
-    
-    document.getElementById('emailDonador').addEventListener('input', validarCorreos);
-    document.getElementById('emailOrganizacion').addEventListener('input', validarCorreos);
+    document.getElementById('telefonoOrganizacion').addEventListener('input', validarTelefono);
+    ['emailDonador', 'emailOrganizacion'].forEach(id => document.getElementById(id).addEventListener('input', validarCorreos));
 
-    // Validación en tiempo real para teléfono de organización
-    document.getElementById('telefonoOrganizacion').addEventListener('input', function() {
-        validarTelefono('telefonoOrganizacion');
-    });
-
-    // Validación del formulario
-    formRegistro.addEventListener('submit', function(event) {
+    formRegistro.addEventListener('submit', async function (event) {
         event.preventDefault();
         event.stopPropagation();
 
-        const tipoSeleccionado = document.querySelector('input[name="tipoUsuario"]:checked').value;
-        let formularioValido = true;
+        const tipo = document.querySelector('input[name="tipoUsuario"]:checked').value;
+        
+        console.log(tipo)
+        const validadoresDonador = [validarCorreos, validarEdad, validarDNI, validarContraseñas];
+        const validadoresOrg = [validarCorreos, validarRUC, validarTelefono, validarContraseñas];
 
-        // Validar según el tipo de usuario
-        if (tipoSeleccionado === 'donador') {
-            // Validar campos específicos de donador
-            if (!validarCorreos()) formularioValido = false;
-            if (!validarEdad()) formularioValido = false;
-            if (!validarDNI()) formularioValido = false;
-            if (!validarContraseñas()) formularioValido = false;
+        let esValido = (tipo === 'donador')
+            ? validadoresDonador.every(fn => fn())
+            : validadoresOrg.every(fn => fn());
+
+        if (tipo === 'organizacion' && tipoOrganizacionSelect.value === '') {
+            tipoOrganizacionSelect.classList.add('is-invalid');
+            esValido = false;
         } else {
-            if (!validarCorreos()) formularioValido = false;
-            if (!validarRUC()) formularioValido = false;
-            if (!validarTelefono('telefonoOrganizacion')) formularioValido = false;
-            if (!validarContraseñas()) formularioValido = false;
+            tipoOrganizacionSelect.classList.remove('is-invalid');
+            tipoOrganizacionSelect.classList.add('is-valid');
+        }
 
-            
-            // Validar tipo de organización
-            if (tipoOrganizacionSelect.value === '') {
-                tipoOrganizacionSelect.classList.add('is-invalid');
-                formularioValido = false;
+        if (tipoOrganizacionSelect.value === 'otro') {
+            const otroTipoInput = document.getElementById('otroTipo');
+            if (otroTipoInput.value.trim() === '') {
+                otroTipoInput.classList.add('is-invalid');
+                esValido = false;
             } else {
-                tipoOrganizacionSelect.classList.remove('is-invalid');
-                tipoOrganizacionSelect.classList.add('is-valid');
-            }
-
-            // Validar campo "otro tipo" si está visible
-            if (tipoOrganizacionSelect.value === 'otro') {
-                const otroTipoInput = document.getElementById('otroTipo');
-                if (otroTipoInput.value.trim() === '') {
-                    otroTipoInput.classList.add('is-invalid');
-                    formularioValido = false;
-                } else {
-                    otroTipoInput.classList.remove('is-invalid');
-                    otroTipoInput.classList.add('is-valid');
-                }
+                otroTipoInput.classList.remove('is-invalid');
+                otroTipoInput.classList.add('is-valid');
             }
         }
 
-        // Validar todos los campos requeridos
-        const camposRequeridos = formRegistro.querySelectorAll('[required]');
-        camposRequeridos.forEach(campo => {
+        formRegistro.querySelectorAll('[required]').forEach(campo => {
             if (!campo.checkValidity()) {
                 campo.classList.add('is-invalid');
-                formularioValido = false;
+                esValido = false;
             } else {
                 campo.classList.remove('is-invalid');
                 campo.classList.add('is-valid');
             }
         });
 
-        // Si todo es válido, procesar el formulario
-        if (formularioValido) {
-            console.log('Formulario válido, enviando datos...');
-            
-            // Recopilar datos del formulario
-            const datosFormulario = new FormData(formRegistro);
-            
-            // Aquí puedes agregar la lógica para enviar los datos al servidor
-            // Por ejemplo, usando fetch() para hacer una petición AJAX
-            
-            console.log('Datos del formulario:', Object.fromEntries(datosFormulario));
-            
-            // Mostrar mensaje de éxito (temporal)
-            alert('Registro exitoso! (Esto es solo una simulación)');
-        } else {
-            console.log('Formulario inválido');
-        }
+        if (!esValido) return console.log('Formulario inválido');
 
-        formRegistro.classList.add('was-validated');
+        const datos = obtenerDatosFormulario(formRegistro);
+
+        try {
+
+            const res = await registroUsuarios(datos);
+            if (!res?.esCorrecto) {
+                alert(`Error: ${res?.mensajes || 'Error desconocido'}`);
+            } else {
+                window.location.href = '/login/inicio';
+            }
+        } catch (err) {
+            console.error('Error al registrar.', err);
+            alert('Error de conexión. Intenta nuevamente.');
+        }
     });
 
-    // Inicializar el formulario
     cambiarTipoUsuario();
 });

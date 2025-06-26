@@ -1,5 +1,5 @@
 <?php
-include(__DIR__ . "/../components/header.php");
+include_once(__DIR__ . "/../components/header.php");
 ?>
 
 <!-- Hero del Catálogo -->
@@ -113,5 +113,5 @@ include(__DIR__ . "/../components/header.php");
 <script type="module" src="<?= URL_PATH ?>/public/assets/js/necesidades.js"></script>
 
 <?php
-include(__DIR__ . "/../components/footer.php");
+include_once(__DIR__ . "/../components/footer.php");
 ?>

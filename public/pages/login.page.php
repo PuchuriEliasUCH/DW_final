@@ -8,7 +8,7 @@
                     <h4 class="mb-0 fw-bold">Iniciar Sesión</h4>
                 </div>
                 <div class="card-body">
-                    <form class="needs-validation" method="post" id="formLogin" novalidate>
+                    <form class="needs-validation" id="formLogin" novalidate>
                         <!-- Email -->
                         <div class="mb-3">
                             <label for="email" class="form-label">Correo electrónico</label>
@@ -62,6 +62,6 @@
     </div>
 </div>
 
-<script src="<?= URL_PATH ?>/public/assets/js/login.js"></script>
+<script type="module" src="<?= URL_PATH ?>/public/assets/js/login.js"></script>
 
 <?php include(__DIR__ . "/../components/footer.php"); ?>
