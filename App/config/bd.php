@@ -14,19 +14,19 @@ class Db
     public function __construct()
     {
 
-        // Desarrollo (comentar al hacer deploy)
-        $this->dbhost = $_ENV['MYSQL_ADDON_HOST'];
-        $this->dbname = $_ENV['MYSQL_ADDON_DB'];
-        $this->dbuser = $_ENV['MYSQL_ADDON_USER'];
-        $this->dbpass = $_ENV['MYSQL_ADDON_PASSWORD'];
+        // // Desarrollo (comentar al hacer deploy)
+        // $this->dbhost = $_ENV['MYSQL_ADDON_HOST'];
+        // $this->dbname = $_ENV['MYSQL_ADDON_DB'];
+        // $this->dbuser = $_ENV['MYSQL_ADDON_USER'];
+        // $this->dbpass = $_ENV['MYSQL_ADDON_PASSWORD'];
 
-        /*
+        
         // Producción 
         $this -> dbhost = getenv('MYSQL_ADDON_HOST');
         $this -> dbname = getenv('MYSQL_ADDON_DB');
         $this -> dbuser = getenv('MYSQL_ADDON_USER');
         $this -> dbpass = getenv('MYSQL_ADDON_PASSWORD');
-        */
+        
 
         $opciones = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
